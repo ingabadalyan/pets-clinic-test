@@ -1,0 +1,71 @@
+package TestRestAPI;
+
+import Utils.Constants;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import org.apache.log4j.Logger;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class PetClinicGetTest {
+    private final static Logger logger = Logger.getLogger(PetClinicGetTest.class);
+
+    private String URL;
+
+    @Test(description = "get all the pets")
+    public void getAllPets() throws UnirestException {
+
+        URL = Constants.BASE_URL + Constants.BASE_PATH_PET;
+        String expectedResponse = "[{\"owner\":{\"firstName\":\"George\",\"lastName\":\"Franklin\",\"address\":\"110 W. Liberty St.\",\"city\":\"Madison\",\"telephone\":\"6085551023\",\"id\":1},\"visits\":[],\"name\":\"Leo\",\"id\":1,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2010/09/07\"},{\"owner\":{\"firstName\":\"Betty\",\"lastName\":\"Davis\",\"address\":\"638 Cardinal Ave.\",\"city\":\"Sun Prairie\",\"telephone\":\"6085551749\",\"id\":2},\"visits\":[],\"name\":\"Basil\",\"id\":2,\"type\":{\"name\":\"hamster\",\"id\":6},\"birthDate\":\"2012/08/06\"},{\"owner\":{\"firstName\":\"Eduardo\",\"lastName\":\"Rodriquez\",\"address\":\"2693 Commerce St.\",\"city\":\"McFarland\",\"telephone\":\"6085558763\",\"id\":3},\"visits\":[],\"name\":\"Rosy\",\"id\":3,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2011/04/17\"},{\"owner\":{\"firstName\":\"Eduardo\",\"lastName\":\"Rodriquez\",\"address\":\"2693 Commerce St.\",\"city\":\"McFarland\",\"telephone\":\"6085558763\",\"id\":3},\"visits\":[],\"name\":\"Jewel\",\"id\":4,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2010/03/07\"},{\"owner\":{\"firstName\":\"Harold\",\"lastName\":\"Davis\",\"address\":\"563 Friendly St.\",\"city\":\"Windsor\",\"telephone\":\"6085553198\",\"id\":4},\"visits\":[],\"name\":\"Iggy\",\"id\":5,\"type\":{\"name\":\"lizard\",\"id\":3},\"birthDate\":\"2010/11/30\"},{\"owner\":{\"firstName\":\"Peter\",\"lastName\":\"McTavish\",\"address\":\"2387 S. Fair Way\",\"city\":\"Madison\",\"telephone\":\"6085552765\",\"id\":5},\"visits\":[],\"name\":\"George\",\"id\":6,\"type\":{\"name\":\"snake\",\"id\":4},\"birthDate\":\"2010/01/20\"},{\"owner\":{\"firstName\":\"Jean\",\"lastName\":\"Coleman\",\"address\":\"105 N. Lake St.\",\"city\":\"Monona\",\"telephone\":\"6085552654\",\"id\":6},\"visits\":[{\"date\":\"2013/01/04\",\"description\":\"spayed\",\"id\":4,\"pet\":7},{\"date\":\"2013/01/01\",\"description\":\"rabies shot\",\"id\":1,\"pet\":7}],\"name\":\"Samantha\",\"id\":7,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2012/09/04\"},{\"owner\":{\"firstName\":\"Jean\",\"lastName\":\"Coleman\",\"address\":\"105 N. Lake St.\",\"city\":\"Monona\",\"telephone\":\"6085552654\",\"id\":6},\"visits\":[{\"date\":\"2013/01/03\",\"description\":\"neutered\",\"id\":3,\"pet\":8},{\"date\":\"2013/01/02\",\"description\":\"rabies shot\",\"id\":2,\"pet\":8}],\"name\":\"Max\",\"id\":8,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2012/09/04\"},{\"owner\":{\"firstName\":\"Jeff\",\"lastName\":\"Black\",\"address\":\"1450 Oak Blvd.\",\"city\":\"Monona\",\"telephone\":\"6085555387\",\"id\":7},\"visits\":[],\"name\":\"Lucky\",\"id\":9,\"type\":{\"name\":\"bird\",\"id\":5},\"birthDate\":\"2011/08/06\"},{\"owner\":{\"firstName\":\"Maria\",\"lastName\":\"Escobito\",\"address\":\"345 Maple St.\",\"city\":\"Madison\",\"telephone\":\"6085557683\",\"id\":8},\"visits\":[],\"name\":\"Mulligan\",\"id\":10,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2007/02/24\"},{\"owner\":{\"firstName\":\"David\",\"lastName\":\"Schroeder\",\"address\":\"2749 Blackhawk Trail\",\"city\":\"Madison\",\"telephone\":\"6085559435\",\"id\":9},\"visits\":[],\"name\":\"Freddy\",\"id\":11,\"type\":{\"name\":\"bird\",\"id\":5},\"birthDate\":\"2010/03/09\"},{\"owner\":{\"firstName\":\"Carlos\",\"lastName\":\"Estaban\",\"address\":\"2335 Independence La.\",\"city\":\"Waunakee\",\"telephone\":\"6085555487\",\"id\":10},\"visits\":[],\"name\":\"Lucky\",\"id\":12,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2010/06/24\"},{\"owner\":{\"firstName\":\"Carlos\",\"lastName\":\"Estaban\",\"address\":\"2335 Independence La.\",\"city\":\"Waunakee\",\"telephone\":\"6085555487\",\"id\":10},\"visits\":[],\"name\":\"Sly\",\"id\":13,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2012/06/08\"}]";
+        logger.info("Running the Test: " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+        Assert.assertEquals(getDataFromEndpoint().getBody().toString(), expectedResponse);
+    }
+
+    @Test(description = "get all the owners")
+    public void getAllOwners() throws UnirestException {
+
+        URL = Constants.BASE_URL + Constants.BASE_PATH_OWNERS;
+        String expectedResponse = "[{\"pets\":[{\"owner\":1,\"visits\":[],\"name\":\"Leo\",\"id\":1,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2010/09/07\"}],\"firstName\":\"George\",\"lastName\":\"Franklin\",\"address\":\"110 W. Liberty St.\",\"city\":\"Madison\",\"telephone\":\"6085551023\",\"id\":1},{\"pets\":[{\"owner\":2,\"visits\":[],\"name\":\"Basil\",\"id\":2,\"type\":{\"name\":\"hamster\",\"id\":6},\"birthDate\":\"2012/08/06\"}],\"firstName\":\"Betty\",\"lastName\":\"Davis\",\"address\":\"638 Cardinal Ave.\",\"city\":\"Sun Prairie\",\"telephone\":\"6085551749\",\"id\":2},{\"pets\":[{\"owner\":3,\"visits\":[],\"name\":\"Jewel\",\"id\":4,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2010/03/07\"},{\"owner\":3,\"visits\":[],\"name\":\"Rosy\",\"id\":3,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2011/04/17\"}],\"firstName\":\"Eduardo\",\"lastName\":\"Rodriquez\",\"address\":\"2693 Commerce St.\",\"city\":\"McFarland\",\"telephone\":\"6085558763\",\"id\":3},{\"pets\":[{\"owner\":4,\"visits\":[],\"name\":\"Iggy\",\"id\":5,\"type\":{\"name\":\"lizard\",\"id\":3},\"birthDate\":\"2010/11/30\"}],\"firstName\":\"Harold\",\"lastName\":\"Davis\",\"address\":\"563 Friendly St.\",\"city\":\"Windsor\",\"telephone\":\"6085553198\",\"id\":4},{\"pets\":[{\"owner\":5,\"visits\":[],\"name\":\"George\",\"id\":6,\"type\":{\"name\":\"snake\",\"id\":4},\"birthDate\":\"2010/01/20\"}],\"firstName\":\"Peter\",\"lastName\":\"McTavish\",\"address\":\"2387 S. Fair Way\",\"city\":\"Madison\",\"telephone\":\"6085552765\",\"id\":5},{\"pets\":[{\"owner\":6,\"visits\":[{\"date\":\"2013/01/03\",\"description\":\"neutered\",\"id\":3,\"pet\":8},{\"date\":\"2013/01/02\",\"description\":\"rabies shot\",\"id\":2,\"pet\":8}],\"name\":\"Max\",\"id\":8,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2012/09/04\"},{\"owner\":6,\"visits\":[{\"date\":\"2013/01/04\",\"description\":\"spayed\",\"id\":4,\"pet\":7},{\"date\":\"2013/01/01\",\"description\":\"rabies shot\",\"id\":1,\"pet\":7}],\"name\":\"Samantha\",\"id\":7,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2012/09/04\"}],\"firstName\":\"Jean\",\"lastName\":\"Coleman\",\"address\":\"105 N. Lake St.\",\"city\":\"Monona\",\"telephone\":\"6085552654\",\"id\":6},{\"pets\":[{\"owner\":7,\"visits\":[],\"name\":\"Lucky\",\"id\":9,\"type\":{\"name\":\"bird\",\"id\":5},\"birthDate\":\"2011/08/06\"}],\"firstName\":\"Jeff\",\"lastName\":\"Black\",\"address\":\"1450 Oak Blvd.\",\"city\":\"Monona\",\"telephone\":\"6085555387\",\"id\":7},{\"pets\":[{\"owner\":8,\"visits\":[],\"name\":\"Mulligan\",\"id\":10,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2007/02/24\"}],\"firstName\":\"Maria\",\"lastName\":\"Escobito\",\"address\":\"345 Maple St.\",\"city\":\"Madison\",\"telephone\":\"6085557683\",\"id\":8},{\"pets\":[{\"owner\":9,\"visits\":[],\"name\":\"Freddy\",\"id\":11,\"type\":{\"name\":\"bird\",\"id\":5},\"birthDate\":\"2010/03/09\"}],\"firstName\":\"David\",\"lastName\":\"Schroeder\",\"address\":\"2749 Blackhawk Trail\",\"city\":\"Madison\",\"telephone\":\"6085559435\",\"id\":9},{\"pets\":[{\"owner\":10,\"visits\":[],\"name\":\"Lucky\",\"id\":12,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2010/06/24\"},{\"owner\":10,\"visits\":[],\"name\":\"Sly\",\"id\":13,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2012/06/08\"}],\"firstName\":\"Carlos\",\"lastName\":\"Estaban\",\"address\":\"2335 Independence La.\",\"city\":\"Waunakee\",\"telephone\":\"6085555487\",\"id\":10}]";
+
+        logger.info("Running the Test: " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        Assert.assertEquals(getDataFromEndpoint().getBody().toString(), expectedResponse);
+    }
+
+    @Test(description = "get the first owner")
+    public void getFirstOwner() throws UnirestException {
+
+        URL = Constants.BASE_URL + Constants.BASE_PATH_OWNERS +"/1";
+        String expectedResponse = "{\"pets\":[{\"owner\":1,\"visits\":[],\"name\":\"Leo\",\"id\":1,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2010/09/07\"}],\"firstName\":\"George\",\"lastName\":\"Franklin\",\"address\":\"110 W. Liberty St.\",\"city\":\"Madison\",\"telephone\":\"6085551023\",\"id\":1}";
+
+        logger.info("Running the Test: " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        Assert.assertEquals(getDataFromEndpoint().getBody().toString(), expectedResponse);
+    }
+
+    @Test(description = "testGetOwnersListSuccess")
+    public void testGetOwnersListSuccess() throws Exception {
+        logger.info("Running the Test: " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+         URL = Constants.BASE_URL + "/api/owners/*/lastname/Davis";
+         String expectedResponse = "[{\"pets\":[{\"owner\":2,\"visits\":[],\"name\":\"Basil\",\"id\":2,\"type\":{\"name\":\"hamster\",\"id\":6},\"birthDate\":\"2012/08/06\"}],\"firstName\":\"Betty\",\"lastName\":\"Davis\",\"address\":\"638 Cardinal Ave.\",\"city\":\"Sun Prairie\",\"telephone\":\"6085551749\",\"id\":2},{\"pets\":[{\"owner\":4,\"visits\":[],\"name\":\"Iggy\",\"id\":5,\"type\":{\"name\":\"lizard\",\"id\":3},\"birthDate\":\"2010/11/30\"}],\"firstName\":\"Harold\",\"lastName\":\"Davis\",\"address\":\"563 Friendly St.\",\"city\":\"Windsor\",\"telephone\":\"6085553198\",\"id\":4}]";
+
+         Assert.assertEquals(getDataFromEndpoint().getBody().toString(), expectedResponse);
+    }
+
+    @Test(description = "owner not found")
+    public void testGetOwnersListNotFound() throws Exception {
+        logger.info("Running the Test: " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+        URL = Constants.BASE_URL + "/api/owners/?lastName=0";
+        String expectedResponse = "[{\"pets\":[{\"owner\":1,\"visits\":[],\"name\":\"Leo\",\"id\":1,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2010/09/07\"}],\"firstName\":\"George\",\"lastName\":\"Franklin\",\"address\":\"110 W. Liberty St.\",\"city\":\"Madison\",\"telephone\":\"6085551023\",\"id\":1},{\"pets\":[{\"owner\":2,\"visits\":[],\"name\":\"Basil\",\"id\":2,\"type\":{\"name\":\"hamster\",\"id\":6},\"birthDate\":\"2012/08/06\"}],\"firstName\":\"Betty\",\"lastName\":\"Davis\",\"address\":\"638 Cardinal Ave.\",\"city\":\"Sun Prairie\",\"telephone\":\"6085551749\",\"id\":2},{\"pets\":[{\"owner\":3,\"visits\":[],\"name\":\"Jewel\",\"id\":4,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2010/03/07\"},{\"owner\":3,\"visits\":[],\"name\":\"Rosy\",\"id\":3,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2011/04/17\"}],\"firstName\":\"Eduardo\",\"lastName\":\"Rodriquez\",\"address\":\"2693 Commerce St.\",\"city\":\"McFarland\",\"telephone\":\"6085558763\",\"id\":3},{\"pets\":[{\"owner\":4,\"visits\":[],\"name\":\"Iggy\",\"id\":5,\"type\":{\"name\":\"lizard\",\"id\":3},\"birthDate\":\"2010/11/30\"}],\"firstName\":\"Harold\",\"lastName\":\"Davis\",\"address\":\"563 Friendly St.\",\"city\":\"Windsor\",\"telephone\":\"6085553198\",\"id\":4},{\"pets\":[{\"owner\":5,\"visits\":[],\"name\":\"George\",\"id\":6,\"type\":{\"name\":\"snake\",\"id\":4},\"birthDate\":\"2010/01/20\"}],\"firstName\":\"Peter\",\"lastName\":\"McTavish\",\"address\":\"2387 S. Fair Way\",\"city\":\"Madison\",\"telephone\":\"6085552765\",\"id\":5},{\"pets\":[{\"owner\":6,\"visits\":[{\"date\":\"2013/01/03\",\"description\":\"neutered\",\"id\":3,\"pet\":8},{\"date\":\"2013/01/02\",\"description\":\"rabies shot\",\"id\":2,\"pet\":8}],\"name\":\"Max\",\"id\":8,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2012/09/04\"},{\"owner\":6,\"visits\":[{\"date\":\"2013/01/04\",\"description\":\"spayed\",\"id\":4,\"pet\":7},{\"date\":\"2013/01/01\",\"description\":\"rabies shot\",\"id\":1,\"pet\":7}],\"name\":\"Samantha\",\"id\":7,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2012/09/04\"}],\"firstName\":\"Jean\",\"lastName\":\"Coleman\",\"address\":\"105 N. Lake St.\",\"city\":\"Monona\",\"telephone\":\"6085552654\",\"id\":6},{\"pets\":[{\"owner\":7,\"visits\":[],\"name\":\"Lucky\",\"id\":9,\"type\":{\"name\":\"bird\",\"id\":5},\"birthDate\":\"2011/08/06\"}],\"firstName\":\"Jeff\",\"lastName\":\"Black\",\"address\":\"1450 Oak Blvd.\",\"city\":\"Monona\",\"telephone\":\"6085555387\",\"id\":7},{\"pets\":[{\"owner\":8,\"visits\":[],\"name\":\"Mulligan\",\"id\":10,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2007/02/24\"}],\"firstName\":\"Maria\",\"lastName\":\"Escobito\",\"address\":\"345 Maple St.\",\"city\":\"Madison\",\"telephone\":\"6085557683\",\"id\":8},{\"pets\":[{\"owner\":9,\"visits\":[],\"name\":\"Freddy\",\"id\":11,\"type\":{\"name\":\"bird\",\"id\":5},\"birthDate\":\"2010/03/09\"}],\"firstName\":\"David\",\"lastName\":\"Schroeder\",\"address\":\"2749 Blackhawk Trail\",\"city\":\"Madison\",\"telephone\":\"6085559435\",\"id\":9},{\"pets\":[{\"owner\":10,\"visits\":[],\"name\":\"Lucky\",\"id\":12,\"type\":{\"name\":\"dog\",\"id\":2},\"birthDate\":\"2010/06/24\"},{\"owner\":10,\"visits\":[],\"name\":\"Sly\",\"id\":13,\"type\":{\"name\":\"cat\",\"id\":1},\"birthDate\":\"2012/06/08\"}],\"firstName\":\"Carlos\",\"lastName\":\"Estaban\",\"address\":\"2335 Independence La.\",\"city\":\"Waunakee\",\"telephone\":\"6085555487\",\"id\":10}]";
+        Assert.assertEquals(getDataFromEndpoint().getBody().toString(), expectedResponse);
+    }
+
+    private HttpResponse<JsonNode> getDataFromEndpoint() throws UnirestException {
+        return Unirest.get( URL)
+                .header("Content-Type", "application/json")
+                .asJson();
+    }
+}
